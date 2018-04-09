@@ -10,24 +10,33 @@ class App extends Component {
     this.state = {
       steps: [{
         title: 'Step One',
-        href: 'http://example1.com',
+        href: '#1',
         onClick: (e) => {
-          e.preventDefault()
           console.log('onClick', 1)
         }
       }, {
         title: 'Step Two',
-        href: 'http://example2.com',
+        href: '#2',
         onClick: (e) => {
-          e.preventDefault()
           console.log('onClick', 2)
         }
       }, {
         title: 'Step Three',
-        href: 'http://example3.com',
+        href: '#3',
         onClick: (e) => {
-          e.preventDefault()
-          console.log('onClick', 2)
+          console.log('onClick', 3)
+        }
+      }, {
+        title: 'Step Four',
+        href: '#4',
+        onClick: (e) => {
+          console.log('onClick', 4)
+        }
+      }, {
+        title: 'Step Five',
+        href: '#5',
+        onClick: (e) => {
+          console.log('onClick', 5)
         }
       }],
       currentStep: 0
@@ -41,13 +50,13 @@ class App extends Component {
     return (
       <div>
         <p>React here!</p>
-        <p>
+        <div>
           <Stepper 
             activeStep={ currentStep }
             steps={ steps } 
-            disabledSteps={ [2] } 
+            disabledSteps={ [] } 
           />
-        </p>  
+        </div>  
       </div>
     );
   }  
