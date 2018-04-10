@@ -10,31 +10,46 @@ import {
   StepTitle
 } from './styles';
 
-const Stepper = ({  
-    activeStep, 
-    steps, 
-    disabledSteps
-}) => (
-  <RootWrapper>
-    <InnerWrapper>
-      <StepTitle>Title here</StepTitle>
-      { steps.map((step, index) => (
-        <Step
-          key={index}
-          width={100 / steps.length}
-          title={step.title}
-          href={step.href}
-          onClick={step.onClick}
-          active={!(disabledSteps || []).includes(index) && index === activeStep}
-          completed={!(disabledSteps || []).includes(index) && index < activeStep}
-          first={index === 0}
-          isLast={index === steps.length - 1}
-          index={index}            
-        />
-      ))}
-    </InnerWrapper>
-  </RootWrapper>
-);
+class Stepper extends PureComponent {  
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeStep: this.props.activeStep
+    };
+  }
+
+  handleSelectedStep = (index, e) => {
+    this.setState({ activeStep: index });
+  }
+
+  render() {
+    const { steps, disabledSteps } = this.props;
+    const { activeStep } = this.state;
+
+    return (
+      <RootWrapper>
+        <InnerWrapper>
+          <StepTitle>{ steps[activeStep].title }</StepTitle>
+          { steps.map((step, index) => (
+            <Step
+              key={ index }
+              width={ 100 / steps.length }
+              title={ step.title }
+              href={ step.href }
+              onClick={ (e) => this.handleSelectedStep(index, e) }
+              active={ !(disabledSteps || []).includes(index) && index === activeStep }
+              completed={ !(disabledSteps || []).includes(index) && index < activeStep }
+              first={ index === 0 }
+              isLast={ index === steps.length - 1 }
+              index={ index }            
+            />
+          ))}
+        </InnerWrapper>
+    </RootWrapper>
+    );
+  }
+}
 
 Stepper.propTypes = {
   activeStep: PropTypes.number,
@@ -49,17 +64,17 @@ export default Stepper;
 
 
 class Step extends PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
-  handleOnClick = (e) => {
+  handleOnClick = () => {
     this.props.onClick();
-    // cambiar estilo bola, marcarlo como activo
   }
   
   render() {        
     const { title, index, active, completed, first, isLast, href, onClick } = this.props;
+
     return (
       <StepItem>
         <StepCircle active={ active } onClick={ this.handleOnClick }></StepCircle>        

@@ -44,7 +44,6 @@ class App extends Component {
   }
 
   render() {
-
     const { steps, currentStep } = this.state;
 
     return (
